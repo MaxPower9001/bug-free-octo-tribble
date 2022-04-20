@@ -9,37 +9,48 @@
   </head>
   <body>
     <div class="wrapper">
-      <input
-        type="checkbox"
-        id="togglePlainRecipes"
-        onchange="togglePlainRecipes(event)"
-      />
-      <label class="input" for="togglePlainRecipes">Show Base Drops</label>
-      &nbsp; &nbsp; &nbsp;
-      <input
-        type="checkbox"
-        checked
-        id="groupByParent"
-        onchange="groupByParent(event)"
-      />
-      <label class="input" for="groupByParent">Collapse crafting list</label>
-      <hr />
-      <h3 id="headerRecipes">Recipes</h3>
-      <div id="archs" class="flex-container recipes">Loading...</div>
-      <hr />
-
-      <h3>Crafting List</h3>
-      <div id="count">Count: 0</div>
-      <div id="toCraft" class="flex-container">
-        <h3>Click recipes to add them to your crafting list</h3>
+      <div class="header">
+        <h1>Archnemesis Calculator</h1>
       </div>
-      <br />
-      <input
-        class="input"
-        type="button"
-        onclick="clearCraftingList()"
-        value="Clear crafting list"
-      />
+      <div class="navigation">
+        <input
+          type="checkbox"
+          id="togglePlainRecipes"
+          onchange="togglePlainRecipes(event)"
+        />
+        <label for="togglePlainRecipes">Show Base Drops</label>
+      </div>
+      <div class="heading" id="headerRecipes">Recipes</div>
+      <div id="archs" class="flex-container recipes">Loading...</div>
+    </div>
+    <div class="wrapper">
+      <div id="craftingNavigation" class="navigation">
+        <div>
+          <span id="count">Count: 0</span>
+          &nbsp;|&nbsp;
+          <input
+            type="button"
+            onclick="clearCraftingList()"
+            value="Clear crafting list"
+          />
+          &nbsp;|&nbsp;
+          <input
+            type="checkbox"
+            checked
+            id="groupByParent"
+            onchange="groupByParent(event)"
+          />
+          <label class="input" for="groupByParent"
+            >Collapse crafting list</label
+          >
+        </div>
+        <div id="key"></div>
+      </div>
+      <div class="heading">Crafting List</div>
+
+      <div id="toCraft" class="flex-container">
+        Click recipes to add them to your crafting list
+      </div>
     </div>
     <script src="script.js"></script>
   </body>
