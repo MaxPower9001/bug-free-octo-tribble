@@ -8,37 +8,39 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <hr />
-    <input
-      type="checkbox"
-      id="togglePlainRecipes"
-      onchange="togglePlainRecipes(event)"
-    />
-    <label class="input" for="togglePlainRecipes">Show Base Drops</label>
-    &nbsp; &nbsp; &nbsp;
-    <input
-      type="checkbox"
-      checked
-      id="groupByParent"
-      onchange="groupByParent(event)"
-    />
-    <label class="input" for="groupByParent">Collapse crafting list</label>
-    <hr />
-    <div id="archs" class="flex-container">Loading...</div>
-    <hr />
+    <div class="wrapper">
+      <input
+        type="checkbox"
+        id="togglePlainRecipes"
+        onchange="togglePlainRecipes(event)"
+      />
+      <label class="input" for="togglePlainRecipes">Show Base Drops</label>
+      &nbsp; &nbsp; &nbsp;
+      <input
+        type="checkbox"
+        checked
+        id="groupByParent"
+        onchange="groupByParent(event)"
+      />
+      <label class="input" for="groupByParent">Collapse crafting list</label>
+      <hr />
+      <h3 id="headerRecipes">Recipes</h3>
+      <div id="archs" class="flex-container recipes">Loading...</div>
+      <hr />
 
-    <h2>Crafting List</h2>
-    <h4 id="count">Count: 0</h4>
-    <div id="toCraft" class="flex-container">
-      <h2>Click recipes to add them to your crafting list</h2>
+      <h3>Crafting List</h3>
+      <div id="count">Count: 0</div>
+      <div id="toCraft" class="flex-container">
+        <h3>Click recipes to add them to your crafting list</h3>
+      </div>
+      <br />
+      <input
+        class="input"
+        type="button"
+        onclick="clearCraftingList()"
+        value="Clear crafting list"
+      />
     </div>
-    <br />
-    <input
-      class="input"
-      type="button"
-      onclick="clearCraftingList()"
-      value="Clear crafting list"
-    />
     <script src="script.js"></script>
   </body>
 </html>

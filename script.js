@@ -26,6 +26,12 @@ function clearCraftingList() {
 
 function togglePlainRecipes(event) {
   plainRecipesActivated = event.target.checked;
+  if (plainRecipesActivated) {
+    document.getElementById("headerRecipes").innerHTML = "Recipes & Drops";
+  } else {
+    document.getElementById("headerRecipes").innerHTML = "Recipes";
+  }
+
   populateRecipes();
 }
 
@@ -39,13 +45,13 @@ function populateRecipes() {
     .map((arch) => {
       if (plainRecipesActivated || arch.dependency.length > 0) {
         if (arch.dependency.length == 0) {
-          return `<div onclick='addArchnemesis("${arch.name}")' class="arch tooltip">
-      <h3>${arch.name}</h3>
+          return `<div onclick='addArchnemesis("${arch.name}")' class="arch drop tooltip">
+      <div class="archText">${arch.name}</div>
   </div>`;
         } else {
           return `<div onclick='addArchnemesis("${arch.name}")' class="arch tooltip">
         <span class="tooltiptext">${arch.dependency}</span>
-      <h3>${arch.name}</h3>
+      <div class="archText">${arch.name}</div>
   </div>`;
         }
       }
@@ -54,7 +60,10 @@ function populateRecipes() {
 }
 
 function addArchnemesis(archnemesis) {
-  resolveDependencies(archs.find((arch) => arch.name === archnemesis));
+  resolveDependencies(
+    archs.find((arch) => arch.name === archnemesis),
+    true
+  );
   reloadCraftingWindow();
 }
 
@@ -90,7 +99,7 @@ function displayItemsToCraft() {
 function displayEmptyCraftingList() {
   document.getElementById(
     "toCraft"
-  ).innerHTML = `<h2>Click recipes to add them to your crafting list</h2>`;
+  ).innerHTML = `<h3>Click recipes to add them to your crafting list</h3>`;
 }
 
 function displayRecipeCount() {
@@ -118,19 +127,24 @@ function displayRecipeCount() {
 }
 
 function displayGroupedByParent() {
-  document.getElementById("toCraft").innerHTML = itemsToDisplay
-    .map((arch, index) => {
-      if (arch.dependency.length === 0) {
-        return `<div onclick='removeArchnemesisGroupedByParent("${index}")' class="arch">
-      <h3>${arch.name}</h3>
+  document.getElementById("toCraft").innerHTML =
+    itemsToDisplay
+      .map((arch, index) => {
+        if (arch.dependency.length === 0) {
+          return `<div onclick='removeArchnemesisGroupedByParent("${index}")' class="arch drop">
+      <div class="archText">${arch.name}</div>
   </div>`;
-      } else {
-        return `<div onclick='removeArchnemesisGroupedByParent("${index}")' class="arch parent">
-    <h3>${arch.name}</h3>
+        } else if (arch.isFirst) {
+          return `<div class="break"><hr /></div><div onclick='removeArchnemesisGroupedByParent("${index}")' class="arch parent">
+     <div class="archText">${arch.name}</div>
 </div>`;
-      }
-    })
-    .join("");
+        } else {
+          return `<div onclick='removeArchnemesisGroupedByParent("${index}")' class="arch">
+    <div class="archText">${arch.name}</div>
+</div>`;
+        }
+      })
+      .join("") + `<div class="break"><hr /></div>`;
 }
 
 function displayGroupedByCount() {
@@ -150,15 +164,19 @@ function displayGroupedByCount() {
     .map((arch) => {
       return `<div onclick='removeArchnemesis("${itemsToDisplay.indexOf(
         arch
-      )}")' class="arch">
-        <h3>${arch.count}x ${arch.name}</h3>
+      )}")' class="arch drop">
+        <div class="archText">${arch.count}x ${arch.name}</div>
     </div>`;
     })
     .join("");
 }
 
-function resolveDependencies(currentArch) {
-  itemsToDisplay.push(currentArch);
+function resolveDependencies(currentArch, isFirst = false) {
+  if (isFirst) {
+    itemsToDisplay[itemsToDisplay.push(currentArch) - 1].isFirst = true;
+  } else {
+    itemsToDisplay.push(currentArch);
+  }
 
   if (currentArch.dependency.length > 0) {
     currentArch.dependency.forEach((dependency) => {

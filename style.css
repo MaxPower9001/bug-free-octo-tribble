@@ -1,53 +1,97 @@
+html {
+  height: 100%;
+  width: 100%;
+  color: #f0f0f0;
+  background-color: #0a0a0a;
+}
+hr {
+  border-color: #171717;
+  opacity: 0.5;
+}
 body {
-  padding: 2.5% 0 0 2.5%;
-  width: 95%;
-  font-family: "Roboto", sans-serif;
+  padding-left: 10vw;
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background: #0a0a0a;
+  font-family: Arial;
+  font-size: 110%;
   text-align: center;
-
-  color: #e8e6e3;
-  background-color: #181a1b;
 
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
 }
+
+div.wrapper {
+  background: #222324;
+  padding: 30px;
+  padding-top: 15px;
+  box-shadow: 3px 5px 20px #030303;
+  border-radius: 6px;
+
+  width: 80vw;
+  min-width: 1100px;
+}
 .flex-container {
-  margin: 0;
-  padding: 0;
+  margin: 0 auto;
+  padding: 0 auto;
   width: 100%;
-  height: 70%;
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.break {
+  flex-basis: 100%;
 }
 .arch {
-  cursor: pointer;
   margin: 5px;
-  padding: 5px;
+  cursor: pointer;
   background-color: #091649;
-  border: 1px solid #1e8ffe;
-  width: 12%;
-  flex-direction: row;
-  justify-content: center;
+  border: 1px solid #091649;
+  border-radius: 6px;
+  width: 180px;
+  height: 40px;
 }
 .arch:hover {
   background-color: #091884;
+  border-color: whitesmoke;
+}
+
+.archText {
+  line-height: 40px;
 }
 
 .parent {
-  background-color: #094909;
-  border: 1px solid #1efe83;
+  background-color: #454;
+  border: 1px solid #454;
+  border-radius: 6px;
 }
 .parent:hover {
-  background-color: #09841e;
+  background-color: #676;
+  border-color: whitesmoke;
+}
+
+.drop {
+  background-color: #444;
+  border: 1px solid #444;
+}
+.drop:hover {
+  background-color: #666;
+  border-color: whitesmoke;
 }
 
 h3 {
   margin: 0;
-  padding: 4%;
-  /* font-size: 1.5em;
-  color: #e8e6e3; */
+  padding: 0;
+  font-size: 1em;
+  color: #e8e6e3;
 }
 
 .tooltip {
@@ -87,8 +131,23 @@ h3 {
   opacity: 1;
 }
 
-.input {
+input[type="button"] {
   font-size: 1.5rem;
+  background-color: #555;
+  color: #eee;
+  border: solid 1px #666;
+  border-radius: 3px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  -webkit-transition: background-color 0.3s ease-out;
+  -moz-transition: background-color 0.3s ease-out;
+  transition: background-color 0.3s ease-out;
+}
+input[type="button"]:hover {
+  background-color: #444;
 }
 input[type="checkbox"] {
   transform: scale(1.5);
