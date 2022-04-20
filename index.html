@@ -4,11 +4,41 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Archnemesis Calculator</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="script" href="script.js" />
   </head>
   <body>
-    <h1>Welcome</h1>
+    <hr />
+    <input
+      type="checkbox"
+      id="togglePlainRecipes"
+      onchange="togglePlainRecipes(event)"
+    />
+    <label class="input" for="togglePlainRecipes">Show Base Drops</label>
+    &nbsp; &nbsp; &nbsp;
+    <input
+      type="checkbox"
+      checked
+      id="groupByParent"
+      onchange="groupByParent(event)"
+    />
+    <label class="input" for="groupByParent">Collapse crafting list</label>
+    <hr />
+    <div id="archs" class="flex-container">Loading...</div>
+    <hr />
+
+    <h2>Crafting List</h2>
+    <h4 id="count">Count: 0</h4>
+    <div id="toCraft" class="flex-container">
+      <h2>Click recipes to add them to your crafting list</h2>
+    </div>
+    <br />
+    <input
+      class="input"
+      type="button"
+      onclick="clearCraftingList()"
+      value="Clear crafting list"
+    />
+    <script src="script.js"></script>
   </body>
 </html>
