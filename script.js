@@ -1,10 +1,12 @@
 let plainRecipesActivated = false;
 let collapseCrafting = true;
+
 let itemsToCraft = [];
 let itemsToCraftWithoutParents = [];
 
 let childCount = 0;
 
+let baseArchnemesisDrops = [];
 let archs = [];
 let recipesToResolve = [];
 
@@ -85,23 +87,21 @@ function addArchnemesis(archnemesis) {
 }
 
 function removeArchnemesis(archnemesisIndex) {
-  itemsToDisplay.splice(archnemesisIndex, 1);
-
+  findArchnemesisToRemove(itemsToCraft[archnemesisIndex].name);
   reloadCraftingWindow();
 }
 
+function findArchnemesisToRemove(archnemesisName) {}
+
 function archnemesisCrafted(itemIndex) {
-  console.log(`Removing index ${itemIndex}`);
-  console.log(`${itemsToCraft[itemIndex].name} crafted`);
-  itemsToCraft.splice(itemsToCraft.indexOf(itemIndex), 1);
+  itemsToCraft.splice(itemIndex, 1);
   reloadCraftingWindow();
 }
 
 function archnemesisDependencyCrafted(parentIndex, childIndex) {
-  console.log(`Removing dependency from ${parent.name}`);
   let parent = itemsToCraft[parentIndex];
   let child;
-  if (parent.dependency.length < childIndex) {
+  if (parent.dependency.length > childIndex) {
     parent.dependency.splice(childIndex, 1);
   } else {
     for (let index = 0; index <= childIndex; index++) {
@@ -165,9 +165,7 @@ function displayRecipeCount() {
     : (countText = "Count (without crafted): ");
   let count = 0;
   itemsToCraftWithoutParents.forEach((arch) => {
-    if (arch.dependency.length === 0) {
-      count++;
-    }
+    count += arch.count;
   });
   if (count == 69) {
     document.getElementById("count").innerHTML = `${
@@ -190,28 +188,60 @@ function displayItemsToCraft() {
     displayGroupedByParent();
   }
 }
+
 function generateItemsToCraftWithoutParents() {
   itemsToCraftWithoutParents = [];
-  itemsToCraft.forEach((currentArch) => {
-    let index = itemsToCraftWithoutParents.indexOf(currentArch);
-    if (index === -1 && currentArch.dependency.length === 0) {
-      itemsToCraftWithoutParents[
-        itemsToCraftWithoutParents.push(currentArch) - 1
-      ].count = 1;
-    } else if (currentArch.dependency.length > 0) {
-      countChildren(currentArch, itemsToCraftWithoutParents);
-    } else if (currentArch.dependency.length === 0) {
-      itemsToCraftWithoutParents[index].count++;
+
+  itemsToCraft.forEach((arch) => {
+    if (arch.dependency.length === 0) {
+      addToItemsWithoutParents(arch);
+    } else {
+      arch.dependency.forEach((dependency) => {
+        if (dependency.dependency.length == 0) {
+          addToItemsWithoutParents(dependency);
+        } else if (
+          baseArchnemesisDrops.find((drop) => drop.name === dependency.name)
+        ) {
+          addToItemsWithoutParents(dependency);
+        } else {
+          countChildren(dependency, itemsToCraftWithoutParents);
+        }
+      });
     }
   });
 }
+
+function countChildren(arch, itemsToCraftWithoutParents) {
+  arch.dependency.forEach((dependency) => {
+    if (baseArchnemesisDrops.find((drop) => drop.name === dependency.name)) {
+      addToItemsWithoutParents(dependency);
+    } else {
+      countChildren(dependency, itemsToCraftWithoutParents);
+    }
+  });
+}
+
+function addToItemsWithoutParents(dependency) {
+  if (
+    !itemsToCraftWithoutParents.find((arch) => arch.name === dependency.name)
+  ) {
+    dependency.count = 1;
+    itemsToCraftWithoutParents.push(JSON.parse(JSON.stringify(dependency)));
+  } else {
+    let index = itemsToCraftWithoutParents.findIndex(
+      (arch) => arch.name === dependency.name
+    );
+    itemsToCraftWithoutParents[index].count++;
+  }
+}
+
 function displayGroupedByCount() {
   itemsToCraftWithoutParents.sort(sortByName);
   document.getElementById("toCraft").innerHTML =
     `<div class="break"><hr /></div>` +
     itemsToCraftWithoutParents
       .map((arch) => {
-        return `<div onclick='removeArchnemesis("${itemsToCraft.indexOf(
+        return `<div onclick='removeArchnemesis("${itemsToCraftWithoutParents.indexOf(
           arch
         )}")' class="arch drop">
         <div class="archText">${arch.count}x ${arch.name}</div>
@@ -220,70 +250,53 @@ function displayGroupedByCount() {
       .join("") +
     `<div class="break"><hr /></div>`;
 }
-function countChildren(arch, itemsToCraftWithoutParents) {
-  let index = itemsToCraftWithoutParents.indexOf(arch);
-  if (index === -1 && arch.dependency.length === 0) {
-    itemsToCraftWithoutParents[
-      itemsToCraftWithoutParents.push(arch) - 1
-    ].count = 1;
-  } else if (arch.dependency.length === 0) {
-    itemsToCraftWithoutParents[index].count++;
-  }
-  arch.dependency.forEach((dependency) => {
-    countChildren(dependency, itemsToCraftWithoutParents);
-  });
-}
 
 function displayGroupedByParent() {
-  sb2 = generateCraftingList(itemsToCraft);
-
-  document.getElementById("toCraft").innerHTML = sb2;
-}
-
-function generateCraftingList(itemsToCraft) {
   let sb = "";
   for (let index = 0; index < itemsToCraft.length; index++) {
     childCount = 0;
     let currentArch = itemsToCraft[index];
     sb += `<div class="break"><hr /></div>`;
     if (currentArch.dependency.length === 0) {
-      sb += `<div onclick='archnemesisCrafted("${index}")' class="arch drop first"><div class="archText">${currentArch.name}</div></div>`;
+      sb += `<div onclick='archnemesisCrafted("${index}")' class="arch ${determineIfDrop(
+        currentArch
+      )} first"><div class="archText">${index}:${currentArch.name}</div></div>`;
     } else if (currentArch.dependency.length > 0) {
-      sb += `<div onclick='archnemesisCrafted("${index}")' class="arch parent"><div class="archText">${currentArch.name}</div></div>`;
-      sb += generateCraftingListChildren(
-        currentArch.dependency,
-        index,
-        childCount++
-      );
+      sb += `<div onclick='archnemesisCrafted("${index}")' class="arch parent"><div class="archText">${index}:${currentArch.name}</div></div>`;
+      sb += generateCraftingListChildren(currentArch.dependency, index);
     }
   }
   sb += `<div class="break"><hr /></div>`;
 
-  return sb;
+  document.getElementById("toCraft").innerHTML = sb;
 }
 
-function generateCraftingListChildren(dependencyList, parentIndex, childCount) {
+function generateCraftingListChildren(dependencyList, parentIndex) {
   let sb = "";
   dependencyList.forEach((archInList) => {
-    if (archInList.dependency.length === 0) {
-      childCount++;
-      sb += `<div onclick='archnemesisDependencyCrafted(${parentIndex},${childCount})' class="arch drop"><div class="archText">${archInList.name}</div></div>`;
-    } else {
-      childCount++;
-      sb += `<div onclick='archnemesisDependencyCrafted(${parentIndex},${childCount})' class="arch"><div class="archText">${archInList.name}</div></div>`;
-      sb += generateCraftingListChildren(
-        archInList.dependency,
-        parentIndex,
-        childCount
-      );
+    sb += `<div onclick='archnemesisDependencyCrafted(${parentIndex},${childCount})' class="arch ${determineIfDrop(
+      archInList
+    )}"><div class="archText">${parentIndex},${childCount}:${
+      archInList.name
+    }</div></div>`;
+    childCount++;
+    if (archInList.dependency.length > 0) {
+      sb += generateCraftingListChildren(archInList.dependency, parentIndex);
     }
   });
   return sb;
 }
 
+function determineIfDrop(currentArch) {
+  if (baseArchnemesisDrops.find((drop) => drop.name === currentArch.name)) {
+    return "drop";
+  }
+  return "";
+}
+
 function fillArchnemesisRecipes() {
   // Base Archnemesis
-  archs.push(
+  baseArchnemesisDrops.push(
     {
       name: "Arcane Buffer",
       dependency: [],
@@ -393,6 +406,7 @@ function fillArchnemesisRecipes() {
       dependency: [],
     }
   );
+  archs = archs.concat(baseArchnemesisDrops);
 
   // Archnemesis recipes
   recipesToResolve.push(
@@ -557,32 +571,22 @@ function fillArchnemesisRecipes() {
     let recipe = { ...recipesToResolve[0] };
     let canBeResolved = true;
 
-    console.log(`Checking recipe ${recipe.name}`);
-    console.log(`Dependencies: ${recipe.dependency.join(", ")}`);
     recipe.dependency.forEach((dependency) => {
       if (recipesToResolve.find((recipe) => recipe.name === dependency)) {
-        console.log(`Recipe ${recipe.name} cannot be resolved`);
-        console.log(`Missing dependency ${dependency}`);
         canBeResolved = false;
       }
     });
     if (canBeResolved) {
-      console.log(`Recipe ${recipe.name} can be resolved`);
       recipe.dependency = resolveRecipe(recipe.dependency);
       archs.push(recipe);
       recipesToResolve.shift();
-      console.log(`Recipe ${recipe.name} resolved`);
     } else {
       recipesToResolve.push(recipesToResolve.shift());
     }
-    console.log(`Recipes to resolve: ${recipesToResolve.length}`);
-    console.log(`Resolved recipes: ${archs.length}`);
-    console.log("");
   }
 
   function resolveRecipe(recipe) {
     let resolvedChildren = [];
-    console.log(`Resolving recipe ${recipe}`);
 
     if (!Array.isArray(recipe)) {
       resolvedChildren.push(archs.find((arch) => arch.name === recipe));
@@ -597,7 +601,6 @@ function fillArchnemesisRecipes() {
         } else {
           resolvedChildren.push(currentArch);
         }
-        console.log(`Current resolved recipes: ${resolvedChildren.join(", ")}`);
       });
     }
     return resolvedChildren;

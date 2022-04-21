@@ -1,0 +1,664 @@
+[
+  { "name": "Arcane Buffer", "dependency": [] },
+  { "name": "Berserker", "dependency": [] },
+  { "name": "Bloodletter", "dependency": [] },
+  { "name": "Bombardier", "dependency": [] },
+  { "name": "Bonebreaker", "dependency": [] },
+  { "name": "Chaosweaver", "dependency": [] },
+  { "name": "Consecrator", "dependency": [] },
+  { "name": "Deadeye", "dependency": [] },
+  { "name": "Dynamo", "dependency": [] },
+  { "name": "Echoist", "dependency": [] },
+  { "name": "Flameweaver", "dependency": [] },
+  { "name": "Frenzied", "dependency": [] },
+  { "name": "Frostweaver", "dependency": [] },
+  { "name": "Gargantuan", "dependency": [] },
+  { "name": "Hasted", "dependency": [] },
+  { "name": "Incendiary", "dependency": [] },
+  { "name": "Juggernaut", "dependency": [] },
+  { "name": "Malediction", "dependency": [] },
+  { "name": "Opulent", "dependency": [] },
+  { "name": "Overcharged", "dependency": [] },
+  { "name": "Permafrost", "dependency": [] },
+  { "name": "Sentinel", "dependency": [] },
+  { "name": "Soul Conduit", "dependency": [] },
+  { "name": "Steel-Infused", "dependency": [] },
+  { "name": "Stormweaver", "dependency": [] },
+  { "name": "Toxic", "dependency": [] },
+  { "name": "Vampiric", "dependency": [] },
+  {
+    "name": "Assassin",
+    "dependency": [
+      { "name": "Deadeye", "dependency": [] },
+      { "name": "Vampiric", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Corrupter",
+    "dependency": [
+      { "name": "Bloodletter", "dependency": [] },
+      { "name": "Chaosweaver", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Drought Bringer",
+    "dependency": [
+      { "name": "Malediction", "dependency": [] },
+      { "name": "Deadeye", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Entangler",
+    "dependency": [
+      { "name": "Toxic", "dependency": [] },
+      { "name": "Bloodletter", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Executioner",
+    "dependency": [
+      { "name": "Frenzied", "dependency": [] },
+      { "name": "Berserker", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Flame Strider",
+    "dependency": [
+      { "name": "Flameweaver", "dependency": [] },
+      { "name": "Hasted", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Frost Strider",
+    "dependency": [
+      { "name": "Frostweaver", "dependency": [] },
+      { "name": "Hasted", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Heralding Minions",
+    "dependency": [
+      { "name": "Dynamo", "dependency": [] },
+      { "name": "Arcane Buffer", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Hexer",
+    "dependency": [
+      { "name": "Chaosweaver", "dependency": [] },
+      { "name": "Echoist", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Ice Prison",
+    "dependency": [
+      { "name": "Permafrost", "dependency": [] },
+      { "name": "Sentinel", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Magma Barrier",
+    "dependency": [
+      { "name": "Incendiary", "dependency": [] },
+      { "name": "Bonebreaker", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Mana Siphoner",
+    "dependency": [
+      { "name": "Consecrator", "dependency": [] },
+      { "name": "Dynamo", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Mirror Image",
+    "dependency": [
+      { "name": "Echoist", "dependency": [] },
+      { "name": "Soul Conduit", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Necromancer",
+    "dependency": [
+      { "name": "Bombardier", "dependency": [] },
+      { "name": "Overcharged", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Rejuvenating",
+    "dependency": [
+      { "name": "Gargantuan", "dependency": [] },
+      { "name": "Vampiric", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Storm Strider",
+    "dependency": [
+      { "name": "Stormweaver", "dependency": [] },
+      { "name": "Hasted", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Abberath-Touched",
+    "dependency": [
+      {
+        "name": "Flame Strider",
+        "dependency": [
+          { "name": "Flameweaver", "dependency": [] },
+          { "name": "Hasted", "dependency": [] }
+        ]
+      },
+      { "name": "Frenzied", "dependency": [] },
+      {
+        "name": "Rejuvenating",
+        "dependency": [
+          { "name": "Gargantuan", "dependency": [] },
+          { "name": "Vampiric", "dependency": [] }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Brine King-Touched",
+    "dependency": [
+      {
+        "name": "Ice Prison",
+        "dependency": [
+          { "name": "Permafrost", "dependency": [] },
+          { "name": "Sentinel", "dependency": [] }
+        ]
+      },
+      {
+        "name": "Storm Strider",
+        "dependency": [
+          { "name": "Stormweaver", "dependency": [] },
+          { "name": "Hasted", "dependency": [] }
+        ]
+      },
+      {
+        "name": "Heralding Minions",
+        "dependency": [
+          { "name": "Dynamo", "dependency": [] },
+          { "name": "Arcane Buffer", "dependency": [] }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Crystal-Skinned",
+    "dependency": [
+      { "name": "Permafrost", "dependency": [] },
+      {
+        "name": "Rejuvenating",
+        "dependency": [
+          { "name": "Gargantuan", "dependency": [] },
+          { "name": "Vampiric", "dependency": [] }
+        ]
+      },
+      { "name": "Berserker", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Effigy",
+    "dependency": [
+      {
+        "name": "Hexer",
+        "dependency": [
+          { "name": "Chaosweaver", "dependency": [] },
+          { "name": "Echoist", "dependency": [] }
+        ]
+      },
+      { "name": "Malediction", "dependency": [] },
+      {
+        "name": "Corrupter",
+        "dependency": [
+          { "name": "Bloodletter", "dependency": [] },
+          { "name": "Chaosweaver", "dependency": [] }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Empowering Minions",
+    "dependency": [
+      {
+        "name": "Necromancer",
+        "dependency": [
+          { "name": "Bombardier", "dependency": [] },
+          { "name": "Overcharged", "dependency": [] }
+        ]
+      },
+      {
+        "name": "Executioner",
+        "dependency": [
+          { "name": "Frenzied", "dependency": [] },
+          { "name": "Berserker", "dependency": [] }
+        ]
+      },
+      { "name": "Gargantuan", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Evocationist",
+    "dependency": [
+      { "name": "Flameweaver", "dependency": [] },
+      { "name": "Frostweaver", "dependency": [] },
+      { "name": "Stormweaver", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Invulnerable",
+    "dependency": [
+      { "name": "Sentinel", "dependency": [] },
+      { "name": "Juggernaut", "dependency": [] },
+      { "name": "Consecrator", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Lunaris-Touched",
+    "dependency": [
+      {
+        "name": "Invulnerable",
+        "dependency": [
+          { "name": "Sentinel", "dependency": [] },
+          { "name": "Juggernaut", "dependency": [] },
+          { "name": "Consecrator", "dependency": [] }
+        ]
+      },
+      {
+        "name": "Frost Strider",
+        "dependency": [
+          { "name": "Frostweaver", "dependency": [] },
+          { "name": "Hasted", "dependency": [] }
+        ]
+      },
+      {
+        "name": "Empowering Minions",
+        "dependency": [
+          {
+            "name": "Necromancer",
+            "dependency": [
+              { "name": "Bombardier", "dependency": [] },
+              { "name": "Overcharged", "dependency": [] }
+            ]
+          },
+          {
+            "name": "Executioner",
+            "dependency": [
+              { "name": "Frenzied", "dependency": [] },
+              { "name": "Berserker", "dependency": [] }
+            ]
+          },
+          { "name": "Gargantuan", "dependency": [] }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Solaris-Touched",
+    "dependency": [
+      {
+        "name": "Invulnerable",
+        "dependency": [
+          { "name": "Sentinel", "dependency": [] },
+          { "name": "Juggernaut", "dependency": [] },
+          { "name": "Consecrator", "dependency": [] }
+        ]
+      },
+      {
+        "name": "Magma Barrier",
+        "dependency": [
+          { "name": "Incendiary", "dependency": [] },
+          { "name": "Bonebreaker", "dependency": [] }
+        ]
+      },
+      {
+        "name": "Empowering Minions",
+        "dependency": [
+          {
+            "name": "Necromancer",
+            "dependency": [
+              { "name": "Bombardier", "dependency": [] },
+              { "name": "Overcharged", "dependency": [] }
+            ]
+          },
+          {
+            "name": "Executioner",
+            "dependency": [
+              { "name": "Frenzied", "dependency": [] },
+              { "name": "Berserker", "dependency": [] }
+            ]
+          },
+          { "name": "Gargantuan", "dependency": [] }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Soul Eater",
+    "dependency": [
+      { "name": "Soul Conduit", "dependency": [] },
+      {
+        "name": "Necromancer",
+        "dependency": [
+          { "name": "Bombardier", "dependency": [] },
+          { "name": "Overcharged", "dependency": [] }
+        ]
+      },
+      { "name": "Echoist", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Temporal Bubble",
+    "dependency": [
+      { "name": "Juggernaut", "dependency": [] },
+      {
+        "name": "Hexer",
+        "dependency": [
+          { "name": "Chaosweaver", "dependency": [] },
+          { "name": "Echoist", "dependency": [] }
+        ]
+      },
+      { "name": "Arcane Buffer", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Treant Horde",
+    "dependency": [
+      { "name": "Toxic", "dependency": [] },
+      { "name": "Sentinel", "dependency": [] },
+      { "name": "Steel-Infused", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Trickster",
+    "dependency": [
+      { "name": "Overcharged", "dependency": [] },
+      {
+        "name": "Assassin",
+        "dependency": [
+          { "name": "Deadeye", "dependency": [] },
+          { "name": "Vampiric", "dependency": [] }
+        ]
+      },
+      { "name": "Echoist", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Tukohama-Touched",
+    "dependency": [
+      { "name": "Bonebreaker", "dependency": [] },
+      {
+        "name": "Executioner",
+        "dependency": [
+          { "name": "Frenzied", "dependency": [] },
+          { "name": "Berserker", "dependency": [] }
+        ]
+      },
+      {
+        "name": "Magma Barrier",
+        "dependency": [
+          { "name": "Incendiary", "dependency": [] },
+          { "name": "Bonebreaker", "dependency": [] }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Innocence-Touched",
+    "dependency": [
+      {
+        "name": "Lunaris-Touched",
+        "dependency": [
+          {
+            "name": "Invulnerable",
+            "dependency": [
+              { "name": "Sentinel", "dependency": [] },
+              { "name": "Juggernaut", "dependency": [] },
+              { "name": "Consecrator", "dependency": [] }
+            ]
+          },
+          {
+            "name": "Frost Strider",
+            "dependency": [
+              { "name": "Frostweaver", "dependency": [] },
+              { "name": "Hasted", "dependency": [] }
+            ]
+          },
+          {
+            "name": "Empowering Minions",
+            "dependency": [
+              {
+                "name": "Necromancer",
+                "dependency": [
+                  { "name": "Bombardier", "dependency": [] },
+                  { "name": "Overcharged", "dependency": [] }
+                ]
+              },
+              {
+                "name": "Executioner",
+                "dependency": [
+                  { "name": "Frenzied", "dependency": [] },
+                  { "name": "Berserker", "dependency": [] }
+                ]
+              },
+              { "name": "Gargantuan", "dependency": [] }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Solaris-Touched",
+        "dependency": [
+          {
+            "name": "Invulnerable",
+            "dependency": [
+              { "name": "Sentinel", "dependency": [] },
+              { "name": "Juggernaut", "dependency": [] },
+              { "name": "Consecrator", "dependency": [] }
+            ]
+          },
+          {
+            "name": "Magma Barrier",
+            "dependency": [
+              { "name": "Incendiary", "dependency": [] },
+              { "name": "Bonebreaker", "dependency": [] }
+            ]
+          },
+          {
+            "name": "Empowering Minions",
+            "dependency": [
+              {
+                "name": "Necromancer",
+                "dependency": [
+                  { "name": "Bombardier", "dependency": [] },
+                  { "name": "Overcharged", "dependency": [] }
+                ]
+              },
+              {
+                "name": "Executioner",
+                "dependency": [
+                  { "name": "Frenzied", "dependency": [] },
+                  { "name": "Berserker", "dependency": [] }
+                ]
+              },
+              { "name": "Gargantuan", "dependency": [] }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Mirror Image",
+        "dependency": [
+          { "name": "Echoist", "dependency": [] },
+          { "name": "Soul Conduit", "dependency": [] }
+        ]
+      },
+      {
+        "name": "Mana Siphoner",
+        "dependency": [
+          { "name": "Consecrator", "dependency": [] },
+          { "name": "Dynamo", "dependency": [] }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Corpse Detonator",
+    "dependency": [
+      {
+        "name": "Necromancer",
+        "dependency": [
+          { "name": "Bombardier", "dependency": [] },
+          { "name": "Overcharged", "dependency": [] }
+        ]
+      },
+      { "name": "Incendiary", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Arakaali-Touched",
+    "dependency": [
+      {
+        "name": "Corpse Detonator",
+        "dependency": [
+          {
+            "name": "Necromancer",
+            "dependency": [
+              { "name": "Bombardier", "dependency": [] },
+              { "name": "Overcharged", "dependency": [] }
+            ]
+          },
+          { "name": "Incendiary", "dependency": [] }
+        ]
+      },
+      {
+        "name": "Entangler",
+        "dependency": [
+          { "name": "Toxic", "dependency": [] },
+          { "name": "Bloodletter", "dependency": [] }
+        ]
+      },
+      {
+        "name": "Assassin",
+        "dependency": [
+          { "name": "Deadeye", "dependency": [] },
+          { "name": "Vampiric", "dependency": [] }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Empowered Elements",
+    "dependency": [
+      {
+        "name": "Evocationist",
+        "dependency": [
+          { "name": "Flameweaver", "dependency": [] },
+          { "name": "Frostweaver", "dependency": [] },
+          { "name": "Stormweaver", "dependency": [] }
+        ]
+      },
+      { "name": "Steel-Infused", "dependency": [] },
+      { "name": "Chaosweaver", "dependency": [] }
+    ]
+  },
+  {
+    "name": "Shakari-Touched",
+    "dependency": [
+      {
+        "name": "Entangler",
+        "dependency": [
+          { "name": "Toxic", "dependency": [] },
+          { "name": "Bloodletter", "dependency": [] }
+        ]
+      },
+      {
+        "name": "Soul Eater",
+        "dependency": [
+          { "name": "Soul Conduit", "dependency": [] },
+          {
+            "name": "Necromancer",
+            "dependency": [
+              { "name": "Bombardier", "dependency": [] },
+              { "name": "Overcharged", "dependency": [] }
+            ]
+          },
+          { "name": "Echoist", "dependency": [] }
+        ]
+      },
+      {
+        "name": "Drought Bringer",
+        "dependency": [
+          { "name": "Malediction", "dependency": [] },
+          { "name": "Deadeye", "dependency": [] }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Kitava-Touched",
+    "dependency": [
+      {
+        "name": "Tukohama-Touched",
+        "dependency": [
+          { "name": "Bonebreaker", "dependency": [] },
+          {
+            "name": "Executioner",
+            "dependency": [
+              { "name": "Frenzied", "dependency": [] },
+              { "name": "Berserker", "dependency": [] }
+            ]
+          },
+          {
+            "name": "Magma Barrier",
+            "dependency": [
+              { "name": "Incendiary", "dependency": [] },
+              { "name": "Bonebreaker", "dependency": [] }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Abberath-Touched",
+        "dependency": [
+          {
+            "name": "Flame Strider",
+            "dependency": [
+              { "name": "Flameweaver", "dependency": [] },
+              { "name": "Hasted", "dependency": [] }
+            ]
+          },
+          { "name": "Frenzied", "dependency": [] },
+          {
+            "name": "Rejuvenating",
+            "dependency": [
+              { "name": "Gargantuan", "dependency": [] },
+              { "name": "Vampiric", "dependency": [] }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Corrupter",
+        "dependency": [
+          { "name": "Bloodletter", "dependency": [] },
+          { "name": "Chaosweaver", "dependency": [] }
+        ]
+      },
+      {
+        "name": "Corpse Detonator",
+        "dependency": [
+          {
+            "name": "Necromancer",
+            "dependency": [
+              { "name": "Bombardier", "dependency": [] },
+              { "name": "Overcharged", "dependency": [] }
+            ]
+          },
+          { "name": "Incendiary", "dependency": [] }
+        ]
+      }
+    ]
+  }
+]
