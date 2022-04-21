@@ -1,8 +1,9 @@
 let plainRecipesActivated = false;
 let collapseCrafting = true;
-let itemsToDisplay = [];
 let itemsToCraft = [];
 let itemsToCraftWithoutParents = [];
+
+let childCount = 0;
 
 let archs = [];
 let recipesToResolve = [];
@@ -74,7 +75,9 @@ function generateToolTip(dependencyList) {
 }
 
 function addArchnemesis(archnemesis) {
-  let uniqueArch = { ...archs.find((arch) => arch.name === archnemesis) };
+  let uniqueArch = JSON.parse(
+    JSON.stringify(archs.find((arch) => arch.name === archnemesis))
+  );
 
   itemsToCraft.push(uniqueArch);
 
@@ -87,15 +90,39 @@ function removeArchnemesis(archnemesisIndex) {
   reloadCraftingWindow();
 }
 
-function removeArchnemesisGroupedByParent(archnemesisIndex) {
-  itemsToDisplay.splice(archnemesisIndex, 1);
+function archnemesisCrafted(itemIndex) {
+  console.log(`Removing index ${itemIndex}`);
+  console.log(`${itemsToCraft[itemIndex].name} crafted`);
+  itemsToCraft.splice(itemsToCraft.indexOf(itemIndex), 1);
+  reloadCraftingWindow();
+}
+
+function archnemesisDependencyCrafted(parentIndex, childIndex) {
+  console.log(`Removing dependency from ${parent.name}`);
+  let parent = itemsToCraft[parentIndex];
+  let child;
+  if (parent.dependency.length < childIndex) {
+    parent.dependency.splice(childIndex, 1);
+  } else {
+    for (let index = 0; index <= childIndex; index++) {
+      currentDependency = parent.dependency[index];
+      if (currentDependency.dependency.length > 0) {
+        child = currentDependency;
+      }
+    }
+  }
 
   reloadCraftingWindow();
 }
 
-function archnemesisCrafted(parentIndex) {
-  itemsToDisplay.splice(itemsToDisplay.indexOf(archnemesis), 1);
-  reloadCraftingWindow();
+function archnemesisDependencyChildCrafted(dependency, childIndex) {
+  dependency.dependency.forEach((dependency) => {
+    if (dependency.dependency.length === 0) {
+      return dependency;
+    } else {
+      archnemesisDependencyChildCrafted(dependency, childIndex--);
+    }
+  });
 }
 
 function reloadCraftingWindow() {
@@ -110,25 +137,17 @@ function reloadCraftingWindow() {
 }
 
 function displayKey() {
-  if (!collapseCrafting && itemsToDisplay.length > 0) {
+  if (!collapseCrafting && itemsToCraft.length > 0) {
     document.getElementById("key").innerHTML = `<div class="key">
       <div class="greenBox"></div>
       &nbsp;= Selected Recipe <br />
-      <div class="greyBox"></div>
-      &nbsp;= Dropped Item<br />
       <div class="blueBox"></div>
       &nbsp;= Intermediate Recipe<br />
+      <div class="greyBox"></div>
+      &nbsp;= Dropped Item<br />
     </div>`;
   } else {
     document.getElementById("key").innerHTML = "";
-  }
-}
-
-function displayItemsToCraft() {
-  if (collapseCrafting) {
-    displayGroupedByCount();
-  } else {
-    displayGroupedByParent();
   }
 }
 
@@ -145,7 +164,7 @@ function displayRecipeCount() {
     ? (countText = "Count: ")
     : (countText = "Count (without crafted): ");
   let count = 0;
-  itemsToDisplay.forEach((arch) => {
+  itemsToCraftWithoutParents.forEach((arch) => {
     if (arch.dependency.length === 0) {
       count++;
     }
@@ -163,32 +182,15 @@ function displayRecipeCount() {
   }
 }
 
-function displayGroupedByParent() {
-  let sb = "";
-  for (let index = 0; index < itemsToDisplay.length; index++) {
-    let currentArch = itemsToDisplay[index];
-    if (currentArch.dependency.length === 0 && currentArch.isFirst) {
-      sb +=
-        `<div class="break"><hr /></div>` +
-        `<div onclick='removeArchnemesisGroupedByParent("${index}")' class="arch drop first"><div class="archText">${currentArch.name}</div></div>`;
-    } else if (currentArch.dependency.length === 0 && !currentArch.isFirst) {
-      sb += `<div onclick='removeArchnemesisGroupedByParent("${index}")' class="arch drop"><div class="archText">${currentArch.name}</div></div>`;
-    } else if (currentArch.dependency.length > 0 && currentArch.isFirst) {
-      sb +=
-        `<div class="break"><hr /></div>` +
-        `<div onclick='removeArchnemesisGroupedByParent("${index}")' class="arch parent"><div class="archText">${currentArch.name}</div></div>`;
-    } else if (currentArch.dependency.length > 0 && !currentArch.isFirst) {
-      sb += `<div onclick='removeArchnemesisGroupedByParent("${index}")' class="arch"><div class="archText">${currentArch.name}</div></div>`;
-    }
+function displayItemsToCraft() {
+  generateItemsToCraftWithoutParents();
+  if (collapseCrafting) {
+    displayGroupedByCount();
+  } else {
+    displayGroupedByParent();
   }
-  sb += `<div class="break"><hr /></div>`;
-
-  sb2 = generateCraftingList(itemsToCraft);
-
-  document.getElementById("toCraft").innerHTML = sb2;
 }
-
-function displayGroupedByCount() {
+function generateItemsToCraftWithoutParents() {
   itemsToCraftWithoutParents = [];
   itemsToCraft.forEach((currentArch) => {
     let index = itemsToCraftWithoutParents.indexOf(currentArch);
@@ -196,10 +198,14 @@ function displayGroupedByCount() {
       itemsToCraftWithoutParents[
         itemsToCraftWithoutParents.push(currentArch) - 1
       ].count = 1;
+    } else if (currentArch.dependency.length > 0) {
+      countChildren(currentArch, itemsToCraftWithoutParents);
     } else if (currentArch.dependency.length === 0) {
       itemsToCraftWithoutParents[index].count++;
     }
   });
+}
+function displayGroupedByCount() {
   itemsToCraftWithoutParents.sort(sortByName);
   document.getElementById("toCraft").innerHTML =
     `<div class="break"><hr /></div>` +
@@ -214,44 +220,63 @@ function displayGroupedByCount() {
       .join("") +
     `<div class="break"><hr /></div>`;
 }
+function countChildren(arch, itemsToCraftWithoutParents) {
+  let index = itemsToCraftWithoutParents.indexOf(arch);
+  if (index === -1 && arch.dependency.length === 0) {
+    itemsToCraftWithoutParents[
+      itemsToCraftWithoutParents.push(arch) - 1
+    ].count = 1;
+  } else if (arch.dependency.length === 0) {
+    itemsToCraftWithoutParents[index].count++;
+  }
+  arch.dependency.forEach((dependency) => {
+    countChildren(dependency, itemsToCraftWithoutParents);
+  });
+}
 
-function generateCraftingList(itemsToDisplay) {
+function displayGroupedByParent() {
+  sb2 = generateCraftingList(itemsToCraft);
+
+  document.getElementById("toCraft").innerHTML = sb2;
+}
+
+function generateCraftingList(itemsToCraft) {
   let sb = "";
-  for (let index = 0; index < itemsToDisplay.length; index++) {
-    let currentArch = itemsToDisplay[index];
+  for (let index = 0; index < itemsToCraft.length; index++) {
+    childCount = 0;
+    let currentArch = itemsToCraft[index];
     sb += `<div class="break"><hr /></div>`;
     if (currentArch.dependency.length === 0) {
       sb += `<div onclick='archnemesisCrafted("${index}")' class="arch drop first"><div class="archText">${currentArch.name}</div></div>`;
     } else if (currentArch.dependency.length > 0) {
       sb += `<div onclick='archnemesisCrafted("${index}")' class="arch parent"><div class="archText">${currentArch.name}</div></div>`;
-      sb += generateCraftingListChildren(currentArch.dependency);
+      sb += generateCraftingListChildren(
+        currentArch.dependency,
+        index,
+        childCount++
+      );
     }
-
-    // if (currentArch.dependency.length === 0 && currentArch.isFirst) {
-    //   sb +=
-    //     `<div class="break"><hr /></div>` +
-    //     `<div onclick='removeArchnemesisGroupedByParent("${index}")' class="arch drop first"><div class="archText">${currentArch.name}</div></div>`;
-    // } else if (currentArch.dependency.length === 0 && !currentArch.isFirst) {
-    //   sb += `<div onclick='removeArchnemesisGroupedByParent("${index}")' class="arch drop"><div class="archText">${currentArch.name}</div></div>`;
-    // } else if (currentArch.dependency.length > 0 && currentArch.isFirst) {
-    //   sb +=
-    //     `<div class="break"><hr /></div>` +
-    //     `<div onclick='removeArchnemesisGroupedByParent("${index}")' class="arch parent"><div class="archText">${currentArch.name}</div></div>`;
-    // } else if (currentArch.dependency.length > 0 && !currentArch.isFirst) {
-    //   sb += `<div onclick='removeArchnemesisGroupedByParent("${index}")' class="arch"><div class="archText">${currentArch.name}</div></div>`;
-    // }
   }
   sb += `<div class="break"><hr /></div>`;
 
   return sb;
 }
 
-function generateCraftingListChildren(dependencyList) {
+function generateCraftingListChildren(dependencyList, parentIndex, childCount) {
   let sb = "";
-  dependencyList.forEach((dependency) => {
-    sb += `<div onclick='removeArchnemesisGroupedByCount("${itemsToDisplay.indexOf(
-      archs.find((arch) => arch.name === dependency)
-    )}")' class="arch"><div class="archText">${dependency}</div></div>`;
+  dependencyList.forEach((archInList) => {
+    if (archInList.dependency.length === 0) {
+      childCount++;
+      sb += `<div onclick='archnemesisDependencyCrafted(${parentIndex},${childCount})' class="arch drop"><div class="archText">${archInList.name}</div></div>`;
+    } else {
+      childCount++;
+      sb += `<div onclick='archnemesisDependencyCrafted(${parentIndex},${childCount})' class="arch"><div class="archText">${archInList.name}</div></div>`;
+      sb += generateCraftingListChildren(
+        archInList.dependency,
+        parentIndex,
+        childCount
+      );
+    }
   });
   return sb;
 }
