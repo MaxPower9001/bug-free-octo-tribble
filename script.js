@@ -86,32 +86,16 @@ function addArchnemesis(archnemesis) {
   reloadCraftingWindow();
 }
 
-function removeArchnemesis(archnemesisIndex) {
-  // findArchnemesisToRemove(itemsToCraftWithoutParents[archnemesisIndex].name);
-  // reloadCraftingWindow();
-}
+function removeArchnemesis(archnemesisIndex) {}
 
 function findArchnemesisToRemove(archnemesisName) {}
 
 function archnemesisCrafted(itemIndex) {
-  // itemsToCraft.splice(itemIndex, 1);
-  // reloadCraftingWindow();
+  itemsToCraft.splice(itemIndex, 1);
+  reloadCraftingWindow();
 }
 
 function archnemesisDependencyCrafted(parentIndex, childIndex) {
-  let parent = itemsToCraft[parentIndex];
-  let child;
-  // if (parent.dependency.length > childIndex) {
-  //   parent.dependency.splice(childIndex, 1);
-  // } else {
-  //   for (let index = 0; index <= childIndex; index++) {
-  //     currentDependency = parent.dependency[index];
-  //     if (currentDependency.dependency.length > 0) {
-  //       child = currentDependency;
-  //     }
-  //   }
-  // }
-
   reloadCraftingWindow();
 }
 
