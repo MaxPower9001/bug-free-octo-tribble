@@ -87,15 +87,15 @@ function addArchnemesis(archnemesis) {
 }
 
 function removeArchnemesis(archnemesisIndex) {
-  findArchnemesisToRemove(itemsToCraft[archnemesisIndex].name);
-  reloadCraftingWindow();
+  // findArchnemesisToRemove(itemsToCraftWithoutParents[archnemesisIndex].name);
+  // reloadCraftingWindow();
 }
 
 function findArchnemesisToRemove(archnemesisName) {}
 
 function archnemesisCrafted(itemIndex) {
-  itemsToCraft.splice(itemIndex, 1);
-  reloadCraftingWindow();
+  // itemsToCraft.splice(itemIndex, 1);
+  // reloadCraftingWindow();
 }
 
 function archnemesisDependencyCrafted(parentIndex, childIndex) {
@@ -260,9 +260,9 @@ function displayGroupedByParent() {
     if (currentArch.dependency.length === 0) {
       sb += `<div onclick='archnemesisCrafted("${index}")' class="arch ${determineIfDrop(
         currentArch
-      )} first"><div class="archText">${index}:${currentArch.name}</div></div>`;
+      )} first"><div class="archText">${currentArch.name}</div></div>`;
     } else if (currentArch.dependency.length > 0) {
-      sb += `<div onclick='archnemesisCrafted("${index}")' class="arch parent"><div class="archText">${index}:${currentArch.name}</div></div>`;
+      sb += `<div onclick='archnemesisCrafted("${index}")' class="arch parent"><div class="archText">${currentArch.name}</div></div>`;
       sb += generateCraftingListChildren(currentArch.dependency, index);
     }
   }
@@ -276,9 +276,7 @@ function generateCraftingListChildren(dependencyList, parentIndex) {
   dependencyList.forEach((archInList) => {
     sb += `<div onclick='archnemesisDependencyCrafted(${parentIndex},${childCount})' class="arch ${determineIfDrop(
       archInList
-    )}"><div class="archText">${parentIndex},${childCount}:${
-      archInList.name
-    }</div></div>`;
+    )}"><div class="archText">${archInList.name}</div></div>`;
     childCount++;
     if (archInList.dependency.length > 0) {
       sb += generateCraftingListChildren(archInList.dependency, parentIndex);
