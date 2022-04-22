@@ -101,16 +101,16 @@ function archnemesisCrafted(itemIndex) {
 function archnemesisDependencyCrafted(parentIndex, childIndex) {
   let parent = itemsToCraft[parentIndex];
   let child;
-  if (parent.dependency.length > childIndex) {
-    parent.dependency.splice(childIndex, 1);
-  } else {
-    for (let index = 0; index <= childIndex; index++) {
-      currentDependency = parent.dependency[index];
-      if (currentDependency.dependency.length > 0) {
-        child = currentDependency;
-      }
-    }
-  }
+  // if (parent.dependency.length > childIndex) {
+  //   parent.dependency.splice(childIndex, 1);
+  // } else {
+  //   for (let index = 0; index <= childIndex; index++) {
+  //     currentDependency = parent.dependency[index];
+  //     if (currentDependency.dependency.length > 0) {
+  //       child = currentDependency;
+  //     }
+  //   }
+  // }
 
   reloadCraftingWindow();
 }
